@@ -1,0 +1,259 @@
+clicklead-app-cpa-tds:
+    domain: "tds-cabinet.clicklead.tech"
+    build_args:
+      - "REACT_APP_API_DOMAIN_URL=https://a-api.clicklead.tech"
+
+clicklead-cabinet:
+    domain: "cabinet.clicklead.tech"
+    build_args:
+      - "REACT_APP_API_DOMAIN_URL=https://a-api.clicklead.tech"
+
+clicklead-webmaster:
+    domain: "webmaster.clicklead.tech"
+    build_args:
+      - "REACT_APP_API_DOMAIN_URL=https://w-api.clicklead.tech"
+
+clicklead_cabinet-v2:
+    domain: "cabinet-v2.clicklead.tech"
+    build_args:
+      - "REACT_APP_API_DOMAIN_URL=https://a-api.clicklead.tech"
+      - "NODE_ENV=development"
+    healthcheck:
+      test: '["CMD-SHELL", "wget -O /dev/null http://localhost || exit 1"]'
+      timeout: '10s'
+
+clicklead_prizes-landing:
+    domain: "prize-new.clicklead.tech"
+    build_args:
+      - "REACT_APP_API_DOMAIN_URL=https://a-api.clicklead.tech"
+
+clicklead_welcome-landing:
+    domain: "clicklead.tech"
+    build_args:
+      - "REACT_APP_API_DOMAIN_URL=https://a-api.clicklead.tech"
+
+clicklead_welcome-landing:
+    domain: "clicklead.tech"
+    build_args:
+      - "REACT_APP_API_DOMAIN_URL=https://a-api.clicklead.tech"
+
+clicklead_main:
+    domain: "a-api.clicklead.tech"
+
+clicklead_main_admin:
+    domain: "a-api.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.main"
+      - "POSTGRES_USER=clicklead_main"
+      - "ELK_HOST=elk.clicklead.prod"
+      - "ELK_PORT=12201"
+    secrets:
+      - "POSTGRES_PASSWORD"
+    labels:
+      - "traefik.http.routers.clicklead_main_admin.middlewares=secHeaders"
+      - "traefik.http.middlewares.secHeaders.headers.accesscontrolallowmethods=GET,POST,DELETE,PUT,OPTIONS,PATCH,HEAD"
+      - "traefik.http.middlewares.secHeaders.headers.accesscontrolalloworiginlist=*"
+      - "traefik.http.middlewares.secHeaders.headers.accesscontrolallowcredentials=true"
+      - "traefik.http.middlewares.secHeaders.headers.accesscontrolallowheaders=*"
+
+clicklead_main_partner:
+    domain: "partner.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.main"
+      - "POSTGRES_USER=clicklead_main"
+    secrets:
+      - "POSTGRES_PASSWORD"
+    service_domains:
+      - "clpartner.xyz"
+
+clicklead_main_system:
+    domain: "s-api.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.main"
+      - "POSTGRES_USER=clicklead_main"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_main_webmaster:
+    domain: "w-api.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.main"
+      - "POSTGRES_USER=clicklead_main"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_auth_auth:
+    domain:
+      - "auth.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.auth"
+      - "POSTGRES_USER=clicklead_auth"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_news_user:
+    domain: "news-u-api.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.news"
+      - "POSTGRES_USER=clicklead_news"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_news_admin:
+    domain: "news-a-api.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.news"
+      - "POSTGRES_USER=clicklead_news"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_translator:
+    domain: "translator.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.translator"
+      - "POSTGRES_USER=clicklead_translator"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_notification:
+    domain: "notification.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.notification"
+      - "POSTGRES_USER=clicklead_notification"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_file:
+    domain: "file.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.file"
+      - "POSTGRES_USER=clicklead_file"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_analytic_analytic:
+    domain: "analytics.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.analytic"
+      - "POSTGRES_USER=clicklead_analytic"
+      - "CLICKHOUSE_USERNAME=clicklead"
+      - "CLICKHOUSE_DB=analytics"
+    secrets:
+      - "POSTGRES_PASSWORD"
+      - "CLICKHOUSE_PASSWORD"
+
+clicklead_analytic_hit:
+    domain: "hit.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.analytic"
+      - "POSTGRES_USER=clicklead_analytic"
+    secrets:
+      - "POSTGRES_PASSWORD"
+    service_domains:
+      - 'cliclds.xyz'
+
+clicklead_partner_tracker_integration_manager:
+    domain: "im.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.partner_tracker_integration_manager"
+      - "POSTGRES_USER=clicklead_partner_tracker_integration_manager"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_tg_bot:
+    domain: "tg-hook.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.tg_bot"
+      - "POSTGRES_USER=clicklead_tg_bot"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_cpa_app_tds_checker:
+    domain: "tds-app-1.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.cpa_app_tds"
+      - "POSTGRES_USER=clicklead_cpa_app_tds"
+    secrets:
+      - "POSTGRES_PASSWORD"
+    service_domains:
+      - "xuteplihp.xyz"
+      - "akars.xyz"
+      - "frov.xyz"
+      - "grepsd.xyz"
+      - "kzep.xyz"
+      - "toqiz.xyz"
+
+clicklead_cpa_app_tds_main:
+    domain: "app-a-api.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.cpa_app_tds"
+      - "POSTGRES_USER=clicklead_cpa_app_tds"
+      - "CLICKHOUSE_USERNAME=clicklead"
+      - "CLICKHOUSE_DB=cpa_app_tds"
+    secrets:
+      - "POSTGRES_PASSWORD"
+      - "CLICKHOUSE_PASSWORD"
+
+clicklead_cpa_app_tds_partner:
+    domain: "tds-partner.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.cpa_app_tds"
+      - "POSTGRES_USER=clicklead_cpa_app_tds"
+    secrets:
+      - "POSTGRES_PASSWORD"
+    service_domains:
+      - 'clicldsp.xyz'
+
+clicklead_ticket_admin:
+    domain: "ticket-a-api.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.ticket"
+      - "POSTGRES_USER=clicklead_ticket"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_ticket_user:
+    domain: "ticket-u-api.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.ticket"
+      - "POSTGRES_USER=clicklead_ticket"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+clicklead_conversion_grabber:
+    domain: "conversion.clicklead.tech"
+    env:
+      - "POSTGRES_DB=clicklead.conversion_grabber"
+      - "POSTGRES_USER=clicklead_conversion_grabber"
+    secrets:
+      - "POSTGRES_PASSWORD"
+
+postback_install:
+    domain: "iclpos.xyz"
+    env:
+      - "POSTGRES_DB=clicklead.postback"
+      - "POSTGRES_USER=clicklead_postback"
+
+postback_event:
+    domain: "eclpos.xyz"
+    env:
+      - "POSTGRES_DB=clicklead.postback"
+      - "POSTGRES_USER=clicklead_postback"
+
+postback_action:
+    domain: "aclpos.xyz"
+    env:
+      - "POSTGRES_DB=clicklead.postback"
+      - "POSTGRES_USER=clicklead_postback"
+
+geo_service:
+    domain: "gclch.xyz"
+    env:
+      - "POSTGRES_DB=clicklead.postback"
+      - "POSTGRES_USER=clicklead_postback"
+
+api_map:
+    domain: "apimap.xyz"
+    env:
+      - "POSTGRES_DB=clicklead.postback"
+      - "POSTGRES_USER=clicklead_postback"
