@@ -1,13 +1,10 @@
-#!/usr/bin/env groovy
-import groovy.yaml.YamlSlurper
-
-
-
-
+import org.yaml.snakeyaml.Yaml
 
 node("build") {
+
     def envs = []
-    envs.add(0, '')
+    envs.add(0, 'prod')
+    envs.add(1, 'prod')
     envs.add(1, 'dev')
 
     properties([
@@ -17,14 +14,14 @@ node("build") {
             ])
     ])
 
-    stage('checkout') {
+    stage('Push configs') {
         checkout scm
+        withAWS(credentials: 'aws-ecs-jenkins', region: 'eu-central-1') {
+            configs = readYaml file: "${params.project}/application_settings.yml"
 
-        configs = new YamlSlurper().parseText(new File("prod/application_settings.yml").text)
-
-        configs.each { service ->
-            service_name = service.key
-            println("/service/${service_name} --> ${service}")
+            configs.each { service ->
+                sh "aws ssm put-parameter --name \"/apps/environment/prod/${service.key}\" --type \"String\" --value \'${service}\' --overwrite"
+            }
         }
     }
 }
