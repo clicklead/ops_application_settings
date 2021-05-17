@@ -1,3 +1,9 @@
+pipeline_checker:
+    domain: "pipeline_checker.xyz"
+    env:
+      - "POSTGRES_DB=clicklead.postback"
+      - "POSTGRES_USER=clicklead_postback"
+    
 clicklead-app-cpa-tds:
     domain: "tds-cabinet.clicklead.tech"
     build_args:
